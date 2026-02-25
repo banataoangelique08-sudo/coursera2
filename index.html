@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interactive Photo Gallery</title>
+<style>
+  /* Main display area */
+  #image {
+    width: 400px;
+    height: 300px;
+    border: 2px solid #333;
+    text-align: center;
+    line-height: 300px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 20px;
+    transition: background-image 0.3s ease;
+  }
+
+  /* Thumbnail images */
+  .thumb {
+    width: 100px;
+    height: 75px;
+    margin: 5px;
+    cursor: pointer;
+  }
+
+  figure {
+    display: inline-block;
+    text-align: center;
+  }
+
+  figcaption {
+    font-size: 0.8em;
+  }
+</style>
+</head>
+<body>
+
+<h1>Interactive Photo Gallery</h1>
+
+<div id="image">Hover over or focus on an image below to display here.</div>
+
+<!-- Thumbnails wrapped in figure for accessibility -->
+<figure>
+  <img src="jngchl.jpg" alt="JeongCheol" class="thumb">
+  <figcaption>JeongCheol</figcaption>
+</figure>
+<figure>
+  <img src="mnwn.jpg" alt="MinWon " class="thumb">
+  <figcaption>MinWon</figcaption>
+</figure>
+<figure>
+  <img src="sksoo.jpg" alt="SeokSoo" class="thumb">
+  <figcaption>SeokSoo</figcaption>
+</figure>
+<figure>
+  <img src="junhao.jpg" alt="JunHao" class="thumb">
+  <figcaption>Sunset Beach</figcaption>
+</figure>
+<figure>
+  <img src="howoo.jpg" alt="HoWoo" class="thumb">
+  <figcaption>Mountain</figcaption>
+</figure>
+<figure>
+  <img src="verkwan.jpg" alt="VerKwan" class="thumb">
+  <figcaption>City Night</figcaption>
+</figure>
+
+<script>
+  // Function to update main display div
+  function upDate(previewPic) {
+    console.log("Mouse or focus event triggered for image: " + previewPic.alt);
+    const imageDiv = document.getElementById("image");
+    imageDiv.textContent = previewPic.alt;
+    imageDiv.style.backgroundImage = `url('${previewPic.src}')`;
+  }
+
+  // Function to reset display div
+  function undo() {
+    const imageDiv = document.getElementById("image");
+    imageDiv.textContent = "Hover over or focus on an image below to display here.";
+    imageDiv.style.backgroundImage = "url('')";
+  }
+
+  // Function to setup accessibility and event listeners
+  function initGallery() {
+    console.log("Gallery initialized");
+    const images = document.querySelectorAll('.thumb');
+    for (let i = 0; i < images.length; i++) {
+      // Add keyboard focus
+      images[i].setAttribute('tabindex', 0);
+
+      // Mouse events
+      images[i].onmouseover = () => upDate(images[i]);
+      images[i].onmouseout = undo;
+
+      // Keyboard focus events
+      images[i].onfocus = () => upDate(images[i]);
+      images[i].onblur = undo;
+    }
+  }
+
+  // Initialize gallery on page load
+  window.onload = initGallery;
+</script>
+
+</body>
+</html>
